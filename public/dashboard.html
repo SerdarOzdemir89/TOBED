@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depo Takip Paneli</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #f5f7fa; }
+        .dashboard-header { text-align: center; margin-top: 30px; }
+        .dashboard-header img { max-width: 90px; margin-bottom: 10px; }
+        .dashboard-header h1 { font-size: 2rem; font-weight: 700; color: #333; }
+        .logout-btn { position: absolute; top: 20px; right: 30px; }
+        .tab-content { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <button class="btn btn-danger logout-btn" id="logoutBtn">Çıkış Yap</button>
+    <div class="dashboard-header">
+        <img src="images/owl-logo.png" alt="Logo">
+        <h1>Depo Takip Paneli</h1>
+    </div>
+    <ul class="nav nav-tabs justify-content-center mt-4" id="dashboardTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="urunler-tab" data-bs-toggle="tab" data-bs-target="#urunler" type="button" role="tab">Ürünler</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="raporlar-tab" data-bs-toggle="tab" data-bs-target="#raporlar" type="button" role="tab">Raporlar</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="gecmis-tab" data-bs-toggle="tab" data-bs-target="#gecmis" type="button" role="tab">Geçmiş</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="yillik-tab" data-bs-toggle="tab" data-bs-target="#yillik" type="button" role="tab">Yıllık Rapor</button>
+        </li>
+    </ul>
+    <div class="tab-content container" id="dashboardTabsContent">
+        <div class="tab-pane fade show active" id="urunler" role="tabpanel">
+            <h3 class="mt-4">Ürünler</h3>
+            <p>Burada ürün ekleme ve listeleme işlemleri olacak (örnek içerik).</p>
+        </div>
+        <div class="tab-pane fade" id="raporlar" role="tabpanel">
+            <h3 class="mt-4">Raporlar</h3>
+            <p>Burada raporlar görüntülenecek (örnek içerik).</p>
+        </div>
+        <div class="tab-pane fade" id="gecmis" role="tabpanel">
+            <h3 class="mt-4">Geçmiş</h3>
+            <p>Burada geçmiş işlemler görüntülenecek (örnek içerik).</p>
+        </div>
+        <div class="tab-pane fade" id="yillik" role="tabpanel">
+            <h3 class="mt-4">Yıllık Rapor</h3>
+            <p>Burada yıllık raporlar görüntülenecek (örnek içerik).</p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script>
+        // TODO: Buraya kendi Firebase config bilgilerinizi ekleyin
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            // ... diğer configler ...
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Oturum kontrolü: Giriş yapılmamışsa login.html'e yönlendir
+        auth.onAuthStateChanged(function(user) {
+            if (!user) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Çıkış butonu
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html> 

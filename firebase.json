@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "/Users/gulcanserdar/Desktop/Depo_Takip/public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

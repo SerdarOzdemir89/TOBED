@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geçmiş Raporu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+</head>
+<body>
+<div class="container-fluid mt-4">
+    <h1 class="mb-4">Geçmiş Raporu</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered" id="logTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Tarih ve Saat</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Eylem</th>
+                    <th>Detaylar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Statik örnek veri, dinamik veri için backend gerekir -->
+                <tr>
+                    <td>2024-01-01 12:00:00</td>
+                    <td>kullanici1</td>
+                    <td>Giriş</td>
+                    <td>Başarılı giriş</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#logTable').DataTable({
+            "order": [[0, "desc"]],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/tr.json"
+            }
+        });
+    });
+</script>
+</body>
+</html> 
