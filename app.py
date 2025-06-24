@@ -6,7 +6,7 @@ import logging
 import json
 from functools import wraps
 from werkzeug.utils import secure_filename
-from flask_login import UserMixin, login_user, login_required, logout_user
+from flask_login import UserMixin, login_user, login_required, logout_user, LoginManager
 import shutil
 from urllib.parse import urljoin
 from sqlalchemy.sql import extract
@@ -18,11 +18,27 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'gizli-anahtar-123'  # Flash mesajları için gerekli
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.dirname(os.path.abspath(__file__)), 'depo_takip.db')
+
+# Render.com için veritabanı yolu ayarı
+if 'RENDER' in os.environ:
+    # Render'da persistent disk /var/data/ dizininde
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////var/data/depo_takip.db'
+else:
+    # Lokal geliştirme ortamı için
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.dirname(os.path.abspath(__file__)), 'depo_takip.db')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/images')
 app.config['DEFAULT_LOGO_PATH'] = 'static/images/owl-logo.png'
 
+# LoginManager kurulumu
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # Debug bilgisi
 logger.debug(f"Uygulama başlatıldı")
