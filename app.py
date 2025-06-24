@@ -1051,17 +1051,13 @@ def update_urun_durum_from_labs(urun):
         urun.hurda_tarihi = None
         urun.hurda_aciklama = None
 
+# Veritabanını ve örnek kullanıcıları uygulama bağlamında oluştur
+# Bu kod, uygulama her başlatıldığında (Gunicorn dahil) çalışır.
+with app.app_context():
+    db.create_all()
+    create_example_users()
+
 if __name__ == '__main__':
-    with app.app_context():
-        # Veritabanını oluştur
-        db.create_all()
-        try:
-            print('Tablolar:', db.engine.table_names())
-        except Exception as e:
-            print('Tablo isimleri alınamadı:', str(e))
-        # Örnek kullanıcıları oluştur
-        create_example_users()
-    
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
